@@ -70,47 +70,7 @@ real R, B;              /* Current number of Red/Blue troops */
 
 #define MAXITER 200000
 
-
-main(){
-    long i;
-    
-    B = BI;
-    R = RI;
-    
-    B_reinf = R_reinf = 0;  /* Total reinforcements so far */
-    B_ordered = R_ordered = 0;
-    
-    B_with_thresh = BI * rBAW;
-    B_reinf_thresh = BI * rBAA;
-    
-    R_with_thresh = RI * rRAW;
-    R_reinf_thresh = RI * rRAA;
-    
-    B_step = R_step = 0;
-    bchunks = rchunks = 0;
-    
-    a1 = (real) b_tot_reinf / B_maxchunks; /* Size of Blue blocks */
-    a2 = (real) r_tot_reinf / R_maxchunks; /* Size of Red blocks */
-    
-    for (i = 0; i < MAXITER; i++) /* ~1/2 hour intervals */
-    {
-        if (B <= 0)
-        {
-            B = 0.0001; /* Don't divide by zero */
-        }
-        rc = R/B;       /* Force ratio */
-        call_reinforcements(i); /* Call for reinforcements */
-        reinforce(i);           /* Do the reinforcement */
-        if (withdraw(i) == STOP) /* See if one side quits */
-        {
-            break;
-        }
-        attrib();               /* Blue and Red attrition */
-    }
-    exit(0);
-}
-
-call_reinforcements(i)  /* See if we need to call for reinforcements */
+void call_reinforcements(i)  /* See if we need to call for reinforcements */
 int i; /* Current time step */
 {
     /* XXX - Uses the previously defined global variables */
@@ -149,7 +109,7 @@ int i; /* Current time step */
     }
 }
 
-reinforce(i)    /* Do the reinforcement */
+void reinforce(i)    /* Do the reinforcement */
 int i;
 {
     /* XXX - Uses the previously defined global variables */
@@ -170,7 +130,7 @@ int i;
     }
 }
 
-withdraw(i)     /* See if one side wants to withdraw */
+int withdraw(i)     /* See if one side wants to withdraw */
 int i;
 {
     /* Check for withdrawal based on force ration or attr */
@@ -197,7 +157,7 @@ int i;
 }
 
 
-attrit()  /* Theow stones at frogs in sport */
+void attrib()  /* Theow stones at frogs in sport */
 {
     /* XXX - Uses the previously defined global variables */
     /* XXX - The use of b as a temporary store of the global
@@ -212,4 +172,42 @@ attrit()  /* Theow stones at frogs in sport */
     R = R - t;
 }
 
+int main(){
+    long i;
+    
+    B = BI;
+    R = RI;
+    
+    B_reinf = R_reinf = 0;  /* Total reinforcements so far */
+    B_ordered = R_ordered = 0;
+    
+    B_with_thresh = BI * rBAW;
+    B_reinf_thresh = BI * rBAA;
+    
+    R_with_thresh = RI * rRAW;
+    R_reinf_thresh = RI * rRAA;
+    
+    B_step = R_step = 0;
+    bchunks = rchunks = 0;
+    
+    a1 = (real) b_tot_reinf / B_maxchunks; /* Size of Blue blocks */
+    a2 = (real) r_tot_reinf / R_maxchunks; /* Size of Red blocks */
+    
+    for (i = 0; i < MAXITER; i++) /* ~1/2 hour intervals */
+    {
+        if (B <= 0)
+        {
+            B = 0.0001; /* Don't divide by zero */
+        }
+        rc = R/B;       /* Force ratio */
+        call_reinforcements(i); /* Call for reinforcements */
+        reinforce(i);           /* Do the reinforcement */
+        if (withdraw(i) == STOP) /* See if one side quits */
+        {
+            break;
+        }
+        attrib();               /* Blue and Red attrition */
+    }
+    exit(0);
+}
 
