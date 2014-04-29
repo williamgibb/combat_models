@@ -157,7 +157,7 @@ int i;
 }
 
 
-void attrib()  /* Theow stones at frogs in sport */
+void attrit()  /* Theow stones at frogs in sport */
 {
     /* XXX - Uses the previously defined global variables */
     /* XXX - The use of b as a temporary store of the global
@@ -206,7 +206,7 @@ int main(){
         {
             break;
         }
-        attrib();               /* Blue and Red attrition */
+        attrit();               /* Blue and Red attrition */
     }
     exit(0);
 }
