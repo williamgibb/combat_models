@@ -200,3 +200,14 @@ class model():
         t = self.c2 * b
         self.R = self.R - t
         return
+        
+        
+
+if __name__ == "__main__":
+    '''
+    
+    '''
+    print("Running model with the default values")
+    m = model()
+    m.run_model()
+
