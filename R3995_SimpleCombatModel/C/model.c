@@ -112,6 +112,8 @@ main(){
 call_reinforcements(i)  /* See if we need to call for reinforcements */
 int i; /* Current time step */
 {
+    /* XXX - Uses the previously defined global variables */
+    
     /* Blue reinforcement based on attrition */
     if (B_ordered == 0 && bchunks < B_maxchunks && B < B_reinf_thresh)
     {
@@ -149,6 +151,8 @@ int i; /* Current time step */
 reinforce(i)    /* Do the reinforcement */
 int i;
 {
+    /* XXX - Uses the previously defined global variables */
+    
     if (B_ordered > 0 && B_step <= i)
     {
         B = B + B_ordered;
@@ -170,6 +174,7 @@ int i;
 {
     /* Check for withdrawal based on force ration or attr */
     
+    /* XXX - Uses the previously defined global variables */
     /* XXX What if BOTH of the sides would withdraw in the
     same timestep?  The original logic defaults to the Blue
     team withdrawling first, but this is not a very good
