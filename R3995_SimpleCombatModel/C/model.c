@@ -12,6 +12,7 @@ with full expressions */
 char *hdr = "$Id$"; // XXX what is this for?
 
 #include <stdio.h>
+#include <stdlib.h> /* XXX OSX complains about stdlib being missing */
 #include <math.h>
 
 typedef double real; // Use 'real' in place of 'double'
@@ -76,11 +77,11 @@ main(){
     B = BI;
     R = RI;
     
-    B_Reinf = R_reinf = 0;  /* Total reinforcements so far */
+    B_reinf = R_reinf = 0;  /* Total reinforcements so far */
     B_ordered = R_ordered = 0;
     
     B_with_thresh = BI * rBAW;
-    B_reinf_thresh = BI * RBAA;
+    B_reinf_thresh = BI * rBAA;
     
     R_with_thresh = RI * rRAW;
     R_reinf_thresh = RI * rRAA;
@@ -95,7 +96,7 @@ main(){
     {
         if (B <= 0)
         {
-            B = 0.0001 /* Don't divide by zero */
+            B = 0.0001; /* Don't divide by zero */
         }
         rc = R/B;       /* Force ratio */
         call_reinforcements(i); /* Call for reinforcements */
@@ -185,11 +186,12 @@ int i;
     {
         /* XXX No status indicated as to WHY the withdrawl is occuring */
         printf("Blue withdrawls at %d.\n", i);
-        return STOP
+        return STOP;
     }
     if (R < R_with_thresh || rc < rRW)
     {
-        
+        printf("Red withdrawls at %d.\n", i);
+        return STOP;
     }
     return GO;
 }
